@@ -87,9 +87,8 @@ TEMPLATES = [
 ]
 CORS_ALLOWED_ORIGINS = [
     config('HOST_CLIENT', default='http://localhost:3000'), 
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://traveling-auth-production.up.railway.app"
+    'localhost', 
+    "traveling-auth-production.up.railway.app"
 ]
 WSGI_APPLICATION = 'travelingAuths.wsgi.application'
 
