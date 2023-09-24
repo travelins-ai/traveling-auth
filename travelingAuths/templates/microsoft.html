@@ -1,0 +1,85 @@
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      function redirectToClientSide(success_redirect_uri) {
+        window.location.replace(`${success_redirect_uri}/auth/confirmation-login?`);
+      }
+      function getFormBoday(details) {
+        return Object.keys(details)
+          .map(
+            (key) =>
+              encodeURIComponent(key) + "=" + encodeURIComponent(details[key])
+          )
+          .join("&");
+      }
+      
+      try {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        const redirect_uri = "{{redirect_uri|safe}}";
+        const success_redirect_uri = 'http://localhost:8000/api/accounts/login/microsoft';
+         console.log('success_redirect_uri: *** ', success_redirect_uri)
+      
+        if (params.flag === "microsoft") {
+            console.log('microsoft')    
+            buildMicrosoftOutlookOAuthUrl()
+        } else if (params.state && params.code) {
+            console.log('microsoft2')
+            console.log('params: ',params)
+        const config = {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'Access-Control-Allow-Origin': 'https://login.microsoftonline.com/',
+            },
+        }; 
+        const paramsBody = new URLSearchParams()
+        paramsBody.append('client_id', 'b47b9ece-746a-4cf3-86cc-a0e3de11d0bb')
+        paramsBody.append('grant_type', 'authorization_code')
+        paramsBody.append('code', params.code)
+        paramsBody.append('redirect_uri', "http://localhost:8000/api/accounts/login/microsoft")
+        paramsBody.append('client_secret', 'gPZ8Q~s2NGVO4Nj4fnFdSxGixAjUk~ZEgm9LNaK5')
+        paramsBody.append('scope', 'offline_access openid email https://graph.microsoft.com/Calendars.Read')
+
+          axios
+          .post('https://cors-anywhere.herokuapp.com/https://login.microsoftonline.com/common/oauth2/v2.0/token', paramsBody, config)
+            .then((res) => {
+            console.log('res post: ',res)
+              const formBody = getFormBoday(res.data);
+              window.location.replace(
+                `${success_redirect_uri}/auth/confirmation-login?${formBody}`
+              );
+            })
+            .catch((errors) => {
+                console.log('errors: ',errors)
+              //redirectToClientSide(success_redirect_uri);
+            });
+        } else {
+            console.log('microsoft3')
+          //redirectToClientSide(success_redirect_uri);
+        }
+      } catch (error) {
+        console.log('error: ',error)    
+        console.log('microsoft4')   
+        //redirectToClientSide(success_redirect_uri);
+      }
+function buildMicrosoftOutlookOAuthUrl() {
+    
+   const params = {
+     client_id: 'b47b9ece-746a-4cf3-86cc-a0e3de11d0bb',
+     redirect_uri: "http://localhost:8000/api/accounts/login/microsoft",
+     response_type: "code",
+     scope: "offline_access openid email https://graph.microsoft.com/Calendars.Read",
+     prompt: "consent",
+     state: '12345',
+   };
+ 
+   const url = new URL(
+     "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+   );
+   url.search = new URLSearchParams(params).toString();
+ 
+   window.location.href = url.toString();
+ }
+    </script>
+  </body>
