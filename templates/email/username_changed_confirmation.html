@@ -1,0 +1,21 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}{{ site_name }} - Tu nombre de usuario ha cambiado exitosamente!{% endblocktrans %}
+{% endblock %}
+
+{% block text_body %}
+{% trans "!Tu nombre de usuario ha cambiado!" %}
+
+{% trans "Gracias por escoger Sirenna" %}
+
+{% blocktrans %}El equipo de {{ site_name }} {% endblocktrans %}
+{% endblock text_body %}
+
+{% block html_body %}
+<p>{% trans "!Tu nombre de usuario ha cambiado!" %}</p>
+
+<p>{% trans "Gracias por escoger Sirenna" %}</p>
+
+<p>{% blocktrans %}El equipo de {{ site_name }} {% endblocktrans %}</p>
+{% endblock html_body %}
