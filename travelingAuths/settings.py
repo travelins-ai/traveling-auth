@@ -200,9 +200,15 @@ DJOSER = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_TLS = True
+
+
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '4a3c1f113cefa2'
+EMAIL_HOST_PASSWORD = 'fdbcc101003e95'
+EMAIL_PORT = '2525'
 AUTH_USER_MODEL = 'accounts.UserAccount'
