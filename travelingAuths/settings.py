@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'djoser',
     'social_django',
     'accounts',
+    'interests',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
