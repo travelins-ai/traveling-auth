@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from travelingAuths.core.services.interest_services import get_interest_from_user
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -13,21 +14,11 @@ listRequiredIntests= ['DESTINATION_TYPE','TRAVEL_RHYTHM','COMFORT_OR_BUDGET','RE
 class AccountInterestsUserApiView(APIView):
     # add permission to check if user is authenticated
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_object(self, user_id):
-        '''
-        Helper method to get the object with given userid
-        '''
-        try:
-            return AccountInterests.objects.filter(user=user_id)
-        except AccountInterests.DoesNotExist:
-            return None
-
     def get(self, request,  *args, **kwargs):
         '''
         Retrieves the AccountInterests with given todo_id
         '''
-        provider_instance = self.get_object(request.user.id)
+        provider_instance = get_interest_from_user(request.user.id)
         if not provider_instance:
             return Response(
                 {"message": "Object with interests from user session does not exists"},
