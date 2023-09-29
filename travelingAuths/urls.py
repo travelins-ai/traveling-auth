@@ -25,4 +25,5 @@ urlpatterns = [
     path('auth/', include('djoser.social.urls')),
     path('api/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('api/', include(('interests.urls', 'interests'), namespace='interests')),
+    path('api/', include(('subscriptions.urls', 'subscriptions'), namespace='subscriptions')),
 ]

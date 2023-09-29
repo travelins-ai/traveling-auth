@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'social_django',
     'accounts',
     'interests',
+    'subscriptions'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
