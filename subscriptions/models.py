@@ -24,4 +24,7 @@ class Subscription(models.Model):
     number_projects = models.IntegerField(default=3)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    #agrear
+    #numero preguntas al chat
+    #numero
     
